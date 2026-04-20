@@ -12,10 +12,13 @@ def test_pow_base_positiva():
 
 
 # --- TU TURNO ---
-# Agregá tests para los siguientes casos:
-#   - Cualquier número elevado a 0 (resultado: 1)
-#   - Número elevado a 1 (resultado: el mismo número)
-#   - Base negativa con exponente par (resultado positivo)
-#   - Exponente decimal, ej: 9 ** 0.5 (raíz cuadrada)
-#
-# Pista: podés usar @pytest.mark.parametrize para probar varios casos a la vez.
+# Usamos parametrize para cubrir las potencias especiales
+@pytest.mark.parametrize("a, b, expected", [
+    (999, 0, 1),        # Cualquier número elevado a 0 (resultado: 1)
+    (42, 1, 42),        # Número elevado a 1 (resultado: el mismo número)
+    (-5, 2, 25),        # Base negativa con exponente par (resultado positivo)
+    (400, 0.5, 20.0),   # Exponente decimal, ej: 400 ** 0.5 (raíz cuadrada)
+])
+def test_pow_parametrizado(a, b, expected):
+    """Verifica potencias con casos borde, exponentes pares y decimales."""
+    assert pow_(a, b) == expected

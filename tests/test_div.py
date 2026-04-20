@@ -12,13 +12,21 @@ def test_div_normal():
 
 
 # --- TU TURNO ---
-# Agregá tests para los siguientes casos:
-#   - División que da resultado decimal (float)
-#   - División con números negativos
-#   - División por cero → debe lanzar ZeroDivisionError
-#
-# Pista: para testear excepciones usá pytest.raises:
-#
-# def test_div_por_cero():
-#     with pytest.raises(ZeroDivisionError):
-#         div(10, 0)
+# 1. Usamos parametrize para las divisiones que dan un número (flotantes y negativos)
+@pytest.mark.parametrize("a, b, expected", [
+    (33, 2, 16.5),      # División que da resultado decimal (float)
+    (50, -2, -25.0),    # División con números negativos (uno negativo)
+    (-144, -12, 12.0),  # División con dos números negativos
+    (0, 55, 0.0),       # Cero dividido por cualquier número
+])
+def test_div_parametrizado(a, b, expected):
+    """Verifica la división con decimales y negativos."""
+    assert div(a, b) == expected
+
+
+# 2. Test especial para comprobar que la calculadora "grite" si dividimos por cero
+def test_div_por_cero():
+    """Verifica que dividir por cero lance un ZeroDivisionError."""
+    # El bloque 'with' atrapa el error. Si div(73, 0) NO lanza el error, el test falla.
+    with pytest.raises(ZeroDivisionError):
+        div(73, 0)
